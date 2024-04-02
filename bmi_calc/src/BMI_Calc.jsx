@@ -3,8 +3,9 @@ import React, { useMemo, useState } from "react";
 const name = prompt("what's your name : ")
 
 const BMI_Calc = () => {
-  const [height, setHeight] = useState(160);
-  const [weight, setWeight] = useState(58);
+  const [height, setHeight] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [isValueSet, setIsValueSet] = useState(false);
 
   const output = useMemo(()=>{
     const calculateHeigth = height/100;
@@ -16,10 +17,12 @@ const BMI_Calc = () => {
 
   const onHeightChange = (e) => {
     setHeight(e.target.value);
+    setIsValueSet(!!e.target.value && !!weight);
   }
 
   const onWeightChange = (e) => {
     setWeight(e.target.value);
+    setIsValueSet(!!e.target.value && !!height);
   }
 
   
@@ -46,9 +49,14 @@ const BMI_Calc = () => {
           max="250"/>
       </div>
       </div>
-      <div className="output-section">
+      {isValueSet &&(
+        <div className="output-section">
         <p>{name.charAt(0).toUpperCase()+name.slice(1)}'s BMI' : <span className="output">{output}</span> </p>
       </div>
+      )
+
+
+      }
   
     </main>
   );
